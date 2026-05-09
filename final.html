@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Monthsary!</title>
+    <style>
+        body { background-color: #fffdf0; color: #5d4037; font-family: sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; overflow-x: hidden; }
+        #ask-container { text-align: center; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 85%; max-width: 350px; border: 3px solid #ffd700; }
+        .btn-group { margin-top: 25px; position: relative; height: 120px; }
+        button { padding: 12px 25px; font-size: 16px; border-radius: 12px; border: none; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        #yes-btn { background-color: #ffd700; color: #5d4037; box-shadow: 0 4px 0 #fbc02d; }
+        #no-btn { background-color: #eeeeee; color: #999; position: absolute; left: 50%; transform: translateX(-50%); }
+        .container { background: #ffffff; padding: 20px; border-radius: 25px; border: 5px solid #ffd700; text-align: center; width: 95%; max-width: 380px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .sunflower { font-size: 50px; display: block; margin-bottom: 10px; }
+        .photo-frame { width: 100%; border-radius: 15px; border: 5px solid #fff9c4; margin-bottom: 15px; overflow: hidden; }
+        .photo-frame img { width: 100%; display: block; }
+        #timer { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; background: #fff9c4; padding: 15px 5px; border-radius: 15px; margin: 20px 0; border: 1px solid #ffe082; }
+        .time-box { font-size: 8px; font-weight: bold; color: #5d4037; background: rgba(255,255,255,0.5); padding: 5px; border-radius: 8px; }
+        .time-box span { font-size: 14px; color: #f57f17; display: block; font-weight: 900; margin-bottom: 2px; }
+        .message { font-style: italic; font-size: 14px; line-height: 1.5; color: #795548; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <div id="ask-container">
+        <div class="sunflower">🌻</div>
+        <h2 style="font-size: 20px;">Mau ngerayain hari jadian kita gaa?</h2>
+        <div class="btn-group">
+            <button id="yes-btn" onclick="startWeb()">Mau!</button>
+            <button id="no-btn">Enggak</button>
+        </div>
+    </div>
+
+    <div id="main-content" style="display: none;">
+        <div class="container">
+            <div class="sunflower">🌻</div>
+            <h1 style="color: #fbc02d; font-size: 22px; margin: 10px 0;">Happy Monthsary!</h1>
+            <div class="photo-frame">
+                <img src="https://i.postimg.cc/0j3SCFwn/1f8db2ba0e7fac4ac3be04e4c4666891.jpg" alt="Foto Kita">
+            </div>
+            <p style="margin: 0; font-size: 14px;">total waktu yang udah kitaa lewatinn bareng</p>
+            
+            <div id="timer">
+                <div class="time-box"><span id="months">0</span>Bulan</div>
+                <div class="time-box"><span id="weeks">0</span>Minggu</div>
+                <div class="time-box"><span id="days">0</span>Hari</div>
+                <div class="time-box"><span id="hours">0</span>Jam</div>
+                <div class="time-box"><span id="minutes">0</span>Menit</div>
+                <div class="time-box"><span id="seconds">0</span>Detik</div>
+            </div>
+            
+            <p class="message">makasih udah always adaa di samping aku, darii 17 Desember kemarin. I love you more bakekok ✨</p>
+        </div>
+    </div>
+
+    <script>
+        const noBtn = document.getElementById("no-btn");
+        const moveButton = () => {
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            noBtn.style.position = "fixed";
+            noBtn.style.left = x + "px";
+            noBtn.style.top = y + "px";
+        };
+
+        noBtn.addEventListener("touchstart", (e) => { e.preventDefault(); moveButton(); });
+        noBtn.addEventListener("mouseover", moveButton);
+
+        function startWeb() {
+            document.getElementById("ask-container").style.display = "none"; 
+            document.getElementById("main-content").style.display = "block"; 
+            updateTimer();
+            setInterval(updateTimer, 1000); 
+        }
+
+        function updateTimer() {
+            const start = new Date("2025-12-17T19:34:00+08:00");
+            const now = new Date();
+            const diff = now - start;
+
+            if (diff > 0) {
+                const totalSec = Math.floor(diff / 1000);
+                const totalMin = Math.floor(totalSec / 60);
+                const totalHr = Math.floor(totalMin / 60);
+                const totalDy = Math.floor(totalHr / 24);
+                const totalWk = Math.floor(totalDy / 7);
+                
+                let totalMo = (now.getFullYear() - start.getFullYear()) * 12 + (now.getMonth() - start.getMonth());
+                if (now.getDate() < start.getDate() || (now.getDate() === start.getDate() && now.getHours() < start.getHours())) {
+                    totalMo--;
+                }
+
+                document.getElementById("months").innerText = totalMo;
+                document.getElementById("weeks").innerText = totalWk;
+                document.getElementById("days").innerText = totalDy;
+                document.getElementById("hours").innerText = totalHr;
+                document.getElementById("minutes").innerText = totalMin;
+                document.getElementById("seconds").innerText = totalSec;
+            }
+        }
+    </script>
+</body>
+</html>
